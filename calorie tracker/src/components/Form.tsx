@@ -20,8 +20,19 @@ export default function Form() {
       [e.target.id]: isNumberField ? +e.target.value : e.target.value,
     });
   };
+
+  const isValidActivity = () => {
+    const { name, calories } = activity;
+    return name.trim() !== "" && calories > 0;
+  };
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
   return (
-    <form className="space-y-2 bg-white shadow p-10 rounded-lg  max-w-3xl mx-auto">
+    <form
+      className="space-y-2 bg-white shadow p-10 rounded-lg  max-w-3xl mx-auto"
+      onSubmit={handleSubmit}
+    >
       <p>Formulario</p>
       <div className="grid grid-cols-1 gap-3">
         <label htmlFor="category" className="font-bold">
@@ -68,8 +79,9 @@ export default function Form() {
       </div>
       <input
         type="submit"
-        className="bg-gray-800 hover:bg-gray-900 w-full p-2 font-bolt uppercase text-white cursor-pointer"
-        value="Guardar Comida o Ejercicio"
+        className="bg-gray-800 hover:bg-gray-900 w-full p-2 font-bolt uppercase text-white cursor-pointer disabled:opacity-10"
+        value={activity.category === 1 ? "Guardar Comida" : "Guardar Ejercicio"}
+        disabled={!isValidActivity()}
       />
     </form>
   );
